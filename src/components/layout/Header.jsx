@@ -5,18 +5,23 @@ import {
     Toolbar,
     Typography,
     IconButton,
-    Box,
     Avatar,
+    Box,
 } from "@mui/material";
 
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 
 import ProfileMenu from "./ProfileMenu";
+import useAuth from "../../hooks/useAuth";
 
 const Header = () => {
 
     const [anchorEl, setAnchorEl] = useState(null);
+
+    const { keycloak } = useAuth();
+
+    const user = keycloak?.tokenParsed;
 
     const handleProfileClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -32,14 +37,16 @@ const Header = () => {
 
             <Toolbar>
 
+                {/* Application Title */}
+
                 <Typography
                     variant="h6"
                     sx={{ flexGrow: 1 }}
                 >
-
                     Enterprise HRMS
-
                 </Typography>
+
+                {/* Notification */}
 
                 <IconButton color="inherit">
 
@@ -47,28 +54,59 @@ const Header = () => {
 
                 </IconButton>
 
+                {/* Dark Mode */}
+
                 <IconButton color="inherit">
 
                     <DarkModeIcon />
 
                 </IconButton>
 
-                <IconButton
-                    color="inherit"
+                {/* User Details */}
+
+                <Box
+                    sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        ml: 2,
+                        cursor: "pointer",
+                    }}
                     onClick={handleProfileClick}
                 >
 
-                    <Avatar>
-
-                        R
-
+                    <Avatar
+                        sx={{
+                            width: 40,
+                            height: 40,
+                            bgcolor: "secondary.main",
+                        }}
+                    >
+                        {user?.name?.charAt(0) || user?.preferred_username?.charAt(0)}
                     </Avatar>
 
-                </IconButton>
+                    <Box sx={{ ml: 1 }}>
+
+                        <Typography
+                            variant="body2"
+                            fontWeight="bold"
+                        >
+                            {user?.name || user?.preferred_username}
+                        </Typography>
+
+                        <Typography
+                            variant="caption"
+                        >
+                            {user?.realm_access?.roles?.[0] || "USER"}
+                        </Typography>
+
+                    </Box>
+
+                </Box>
 
                 <ProfileMenu
                     anchorEl={anchorEl}
                     handleClose={handleClose}
+                    keycloak={keycloak}
                 />
 
             </Toolbar>

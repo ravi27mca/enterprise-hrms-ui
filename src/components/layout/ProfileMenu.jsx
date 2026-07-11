@@ -2,12 +2,25 @@ import {
     Menu,
     MenuItem,
     Divider,
+    Typography,
+    Box,
 } from "@mui/material";
 
 const ProfileMenu = ({
     anchorEl,
     handleClose,
+    keycloak,
 }) => {
+
+    const user = keycloak?.tokenParsed;
+
+    const handleLogout = () => {
+
+        handleClose();
+
+        keycloak.logout();
+
+    };
 
     return (
 
@@ -15,25 +28,46 @@ const ProfileMenu = ({
             anchorEl={anchorEl}
             open={Boolean(anchorEl)}
             onClose={handleClose}
+            PaperProps={{
+                sx: {
+                    width: 250,
+                    mt: 1,
+                },
+            }}
         >
 
-            <MenuItem>
+            {/* User Information */}
 
-                Ravi
+            <Box sx={{ px: 2, py: 1 }}>
 
-            </MenuItem>
+                <Typography
+                    variant="subtitle1"
+                    fontWeight="bold"
+                >
+                    {user?.name || user?.preferred_username}
+                </Typography>
 
-            <MenuItem>
+                <Typography
+                    variant="body2"
+                    color="text.secondary"
+                >
+                    {user?.email}
+                </Typography>
 
-                Administrator
+                <Typography
+                    variant="caption"
+                    color="primary"
+                >
+                    {user?.realm_access?.roles?.join(", ")}
+                </Typography>
 
-            </MenuItem>
+            </Box>
 
             <Divider />
 
             <MenuItem onClick={handleClose}>
 
-                Profile
+                My Profile
 
             </MenuItem>
 
@@ -43,7 +77,15 @@ const ProfileMenu = ({
 
             </MenuItem>
 
-            <MenuItem onClick={handleClose}>
+            <Divider />
+
+            <MenuItem
+                onClick={handleLogout}
+                sx={{
+                    color: "error.main",
+                    fontWeight: "bold",
+                }}
+            >
 
                 Logout
 
