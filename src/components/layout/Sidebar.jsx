@@ -18,7 +18,6 @@ const Sidebar = () => {
     const location = useLocation();
 
     return (
-
         <Drawer
             variant="permanent"
             sx={{
@@ -27,43 +26,58 @@ const Sidebar = () => {
                 "& .MuiDrawer-paper": {
                     width: drawerWidth,
                     boxSizing: "border-box",
+                    borderRight: "1px solid #e0e0e0",
                 },
             }}
         >
-
+            {/* Header Space */}
             <Toolbar />
 
             <List>
 
-                {
-                    menuItems.map((item) => (
+                {menuItems.map((item) => {
 
+                    const Icon = item.icon;
+
+                    return (
                         <ListItemButton
-                            key={item.text}
+                            key={item.path}
                             component={Link}
                             to={item.path}
                             selected={location.pathname === item.path}
+                            sx={{
+                                mx: 1,
+                                borderRadius: 2,
+                                mb: 0.5,
+
+                                "&.Mui-selected": {
+                                    backgroundColor: "#1976d2",
+                                    color: "#fff",
+
+                                    "& .MuiListItemIcon-root": {
+                                        color: "#fff",
+                                    },
+                                },
+
+                                "&:hover": {
+                                    backgroundColor: "#e3f2fd",
+                                },
+                            }}
                         >
-
                             <ListItemIcon>
-
-                                {item.icon}
-
+                                <Icon />
                             </ListItemIcon>
 
                             <ListItemText primary={item.text} />
-
                         </ListItemButton>
+                    );
 
-                    ))
-                }
+                })}
 
             </List>
 
         </Drawer>
-
     );
-
 };
 
 export default Sidebar;

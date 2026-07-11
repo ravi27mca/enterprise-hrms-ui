@@ -10,38 +10,38 @@ const menuItems = [
     {
         text: "Dashboard",
         path: "/dashboard",
-        icon: <DashboardIcon />
+        icon: DashboardIcon,
     },
     {
         text: "Employees",
         path: "/employees",
-        icon: <PeopleIcon />
+        icon: PeopleIcon,
     },
     {
         text: "Departments",
         path: "/departments",
-        icon: <BusinessIcon />
+        icon: BusinessIcon,
     },
     {
         text: "Attendance",
         path: "/attendance",
-        icon: <CalendarMonthIcon />
+        icon: CalendarMonthIcon,
     },
     {
         text: "Leave",
         path: "/leave",
-        icon: <EventNoteIcon />
+        icon: EventNoteIcon,
     },
     {
         text: "Payroll",
         path: "/payroll",
-        icon: <PaymentsIcon />
+        icon: PaymentsIcon,
     },
     {
         text: "Reports",
         path: "/reports",
-        icon: <AssessmentIcon />
-    }
+        icon: AssessmentIcon,
+    },
 ];
 
 export default menuItems;
